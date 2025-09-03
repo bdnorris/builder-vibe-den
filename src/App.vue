@@ -47,15 +47,26 @@ function pattyStyle(hex: string) {
     </header>
 
     <!-- Hero -->
-    <section class="relative overflow-hidden">
-      <div class="absolute inset-0 opacity-10 bg-rainbow-stripe blur-3xl"></div>
-      <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24 grid lg:grid-cols-2 gap-10 items-center">
+    <section class="relative isolate">
+      <div class="absolute inset-0 -z-10">
+        <video aria-hidden="true" autoplay muted loop playsinline class="absolute inset-0 h-full w-full object-cover">
+          <source src="https://videos.pexels.com/video-files/5510891/5510891-hd_1920_1080_25fps.mp4" type="video/mp4" />
+        </video>
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="absolute -bottom-1 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-slate-900"></div>
+      </div>
+      <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24 lg:py-40 text-center">
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-tight">
+          Plant‑Based Burger Patties in Every <span class="rainbow-text">Color of the Rainbow</span>
+        </h1>
+      </div>
+    </section>
+
+    <section class="py-12 lg:py-16 bg-slate-950/40 border-t border-b border-white/10">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-center">
         <div>
           <div class="badge mb-4"><span class="h-2 w-2 rounded-full bg-brand-primary"></span> New wholesale launch</div>
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
-            Plant‑Based Burger Patties in Every <span class="rainbow-text">Color of the Rainbow</span>
-          </h1>
-          <p class="mt-6 text-lg text-slate-300 max-w-prose">
+          <p class="text-lg text-slate-300 max-w-prose">
             Designed for restaurant pros: vibrant, food-safe colors that sear, sizzle, and wow your guests. Same juicy bite, now in Red, Orange, Yellow, Green, Blue, and Violet.
           </p>
           <ul class="mt-6 space-y-2 text-slate-200">
@@ -66,23 +77,6 @@ function pattyStyle(hex: string) {
           <div class="mt-8 flex flex-wrap items-center gap-4">
             <a href="#lead-form" class="btn">Request wholesale pricing</a>
             <a href="#colors" class="btn-secondary">See the colors</a>
-          </div>
-        </div>
-        <!-- 16:9 Video placeholder without aspect-ratio plugin -->
-        <div class="relative w-full rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/10">
-          <div class="w-full" style="padding-bottom:56.25%"></div>
-          <div class="absolute inset-0 bg-black/5 flex items-center justify-center">
-            <div class="relative max-w-3xl w-full h-full">
-              <div class="absolute inset-0 bg-gradient-to-tr from-slate-900 via-slate-800 to-slate-700 opacity-80"></div>
-              <div class="absolute inset-0 grid place-items-center">
-                <button type="button" aria-label="Play video" class="h-20 w-20 rounded-full grid place-items-center bg-white/90 hover:bg-white transition shadow-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-8 w-8 text-slate-900">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </button>
-                <p class="mt-4 text-white/80 text-sm">Drop your 16:9 video here</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
