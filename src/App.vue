@@ -59,9 +59,9 @@ function pattyStyle(hex: string) {
             Designed for restaurant pros: vibrant, food-safe colors that sear, sizzle, and wow your guests. Same juicy bite, now in Red, Orange, Yellow, Green, Blue, and Violet.
           </p>
           <ul class="mt-6 space-y-2 text-slate-700">
-            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-rainbow.red"></span> 100% plant-based, allergen‑friendly recipe</li>
-            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-rainbow.green"></span> Cooks on flat‑top or grill like your current patties</li>
-            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-rainbow.blue"></span> Natural color sources; holds color after cooking</li>
+            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-rainbow-red"></span> 100% plant-based, allergen‑friendly recipe</li>
+            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-rainbow-green"></span> Cooks on flat‑top or grill like your current patties</li>
+            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-rainbow-blue"></span> Natural color sources; holds color after cooking</li>
           </ul>
           <div class="mt-8 flex flex-wrap items-center gap-4">
             <a href="#lead-form" class="btn">Request wholesale pricing</a>
