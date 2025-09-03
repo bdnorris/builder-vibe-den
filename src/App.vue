@@ -167,12 +167,12 @@ function pattyStyle(hex: string) {
             <h2 class="text-3xl sm:text-4xl font-extrabold">Let’s start a conversation</h2>
             <p class="mt-3 text-slate-600">Tell us about your restaurant and we’ll send wholesale pricing and sample options.</p>
             <div class="mt-6 flex flex-wrap gap-3">
-              <span class="badge"><span class="h-2 w-2 rounded-full bg-rainbow.red"></span> Red</span>
-              <span class="badge"><span class="h-2 w-2 rounded-full bg-rainbow.orange"></span> Orange</span>
-              <span class="badge"><span class="h-2 w-2 rounded-full bg-rainbow.yellow"></span> Yellow</span>
-              <span class="badge"><span class="h-2 w-2 rounded-full bg-rainbow.green"></span> Green</span>
-              <span class="badge"><span class="h-2 w-2 rounded-full bg-rainbow.blue"></span> Blue</span>
-              <span class="badge"><span class="h-2 w-2 rounded-full bg-rainbow.violet"></span> Violet</span>
+              <span class="badge"><span class="h-2 w-2 rounded-full bg-rainbow-red"></span> Red</span>
+              <span class="badge"><span class="h-2 w-2 rounded-full bg-rainbow-orange"></span> Orange</span>
+              <span class="badge"><span class="h-2 w-2 rounded-full bg-rainbow-yellow"></span> Yellow</span>
+              <span class="badge"><span class="h-2 w-2 rounded-full bg-rainbow-green"></span> Green</span>
+              <span class="badge"><span class="h-2 w-2 rounded-full bg-rainbow-blue"></span> Blue</span>
+              <span class="badge"><span class="h-2 w-2 rounded-full bg-rainbow-violet"></span> Violet</span>
             </div>
           </div>
 
