@@ -1,1 +1,39 @@
 @import './base.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --ring: 244 80% 60%;
+  }
+  h1, h2, h3 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-full px-5 py-3 font-semibold text-white transition shadow-candy hover:opacity-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-primary/30;
+    background-image: linear-gradient(90deg, theme(colors.brand.primary), theme(colors.brand.pink));
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full px-5 py-3 font-semibold text-brand-primary bg-white border border-brand-primary/20 hover:border-brand-primary/40 shadow;
+  }
+  .badge {
+    @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium bg-white/70 backdrop-blur border-black/10;
+  }
+  .rainbow-text {
+    background-image: linear-gradient(90deg, theme(colors.rainbow.red), theme(colors.rainbow.orange), theme(colors.rainbow.yellow), theme(colors.rainbow.green), theme(colors.rainbow.blue), theme(colors.rainbow.violet));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/70 backdrop-blur border border-white/30 shadow-lg;
+  }
+}
