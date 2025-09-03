@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, watch } from 'vue'
 interface ColorItem {
   name: string
   hex: string
@@ -23,6 +24,46 @@ function pattyStyle(hex: string) {
     backgroundImage: `radial-gradient(60% 60% at 30% 25%, ${highlight}, transparent 60%), radial-gradient(80% 80% at 70% 70%, ${shadow}, transparent 60%), radial-gradient(circle at 50% 50%, ${base}, ${base})`,
   }
 }
+const selectedColors = ref<string[]>([])
+const showToaster = ref(false)
+let toastTimer: number | undefined
+
+function openToaster() {
+  showToaster.value = true
+  if (toastTimer) clearTimeout(toastTimer)
+  toastTimer = window.setTimeout(() => (showToaster.value = false), 4000)
+}
+
+function addToMenu(color: string) {
+  if (!selectedColors.value.includes(color)) {
+    selectedColors.value.push(color)
+  }
+  openToaster()
+}
+
+function removeColor(color: string) {
+  selectedColors.value = selectedColors.value.filter((c) => c !== color)
+}
+
+function gotoForm() {
+  const section = document.getElementById('lead-form')
+  section?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+function colorDotClass(name: string) {
+  const k = name.toLowerCase()
+  if (k === 'red') return 'bg-rainbow-red'
+  if (k === 'orange') return 'bg-rainbow-orange'
+  if (k === 'yellow') return 'bg-rainbow-yellow'
+  if (k === 'green') return 'bg-rainbow-green'
+  if (k === 'blue') return 'bg-rainbow-blue'
+  if (k === 'violet') return 'bg-rainbow-violet'
+  return 'bg-white'
+}
+
+watch(selectedColors, (v) => {
+  if (v.length === 0) showToaster.value = false
+})
 </script>
 
 <template>
@@ -42,7 +83,7 @@ function pattyStyle(hex: string) {
         <nav class="hidden md:flex items-center gap-6 text-sm text-slate-200">
           <a href="#colors" class="hover:text-white">Colors</a>
           <a href="#packs" class="hover:text-white">Packs</a>
-          <a href="#lead-form" class="hover:text-white">Contact</a>
+          <a href="#lead-form" class="hover:text-white">Request samples</a>
         </nav>
         <a href="#lead-form" class="btn">Get wholesale info</a>
       </div>
@@ -145,10 +186,16 @@ function pattyStyle(hex: string) {
             </div>
             <div class="mt-5 flex items-center justify-between text-sm">
               <div class="flex items-center gap-2">
-                <span class="h-3 w-3 rounded-full" :style="{ backgroundColor: c.hex }"></span
-                >{{ c.hex }}
+                <span
+                  class="h-3 w-3 rounded-full"
+                  :style="{ backgroundColor: c.hex }"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Color swatch</span>
               </div>
-              <a href="#lead-form" class="text-brand-primary hover:underline">Add to menu</a>
+              <button type="button" class="btn-secondary" @click="addToMenu(c.name)">
+                Add to samples
+              </button>
             </div>
           </article>
         </div>
@@ -166,15 +213,13 @@ function pattyStyle(hex: string) {
         </div>
         <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-sm">
-            <div class="flex items-center justify-between">
-              <h3 class="text-2xl font-bold">24‑pack case</h3>
-              <span class="badge"
-                ><span class="h-2 w-2 rounded-full bg-emerald-500"></span> Most flexible</span
-              >
+            <div class="space-y-1">
+              <h3 class="text-3xl font-extrabold rainbow-text">Most Flexible</h3>
+              <p class="text-slate-300">24‑pack case</p>
             </div>
             <ul class="mt-4 space-y-2 text-slate-300">
               <li>Great for daily specials and small concepts</li>
-              <li>Mix‑and‑match up to 2 colors per case</li>
+              <li>Mix���and‑match up to 2 colors per case</li>
               <li>Ships in insulated recyclable packaging</li>
             </ul>
             <div class="mt-6">
@@ -184,11 +229,9 @@ function pattyStyle(hex: string) {
           <div
             class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-sm ring-2 ring-brand-primary/20"
           >
-            <div class="flex items-center justify-between">
-              <h3 class="text-2xl font-bold">48‑pack case</h3>
-              <span class="badge"
-                ><span class="h-2 w-2 rounded-full bg-fuchsia-500"></span> Best value</span
-              >
+            <div class="space-y-1">
+              <h3 class="text-3xl font-extrabold rainbow-text">Best Value</h3>
+              <p class="text-slate-300">48‑pack case</p>
             </div>
             <ul class="mt-4 space-y-2 text-slate-300">
               <li>Ideal for multi‑unit and high‑volume kitchens</li>
@@ -208,30 +251,14 @@ function pattyStyle(hex: string) {
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-10 items-start">
           <div>
-            <h2 class="text-3xl sm:text-4xl font-extrabold">Let’s start a conversation</h2>
-            <p class="mt-3 text-slate-300">
-              Tell us about your restaurant and we’ll send wholesale pricing and sample options.
-            </p>
-            <div class="mt-6 flex flex-wrap gap-3">
-              <span class="badge"
-                ><span class="h-2 w-2 rounded-full bg-rainbow-red"></span> Red</span
-              >
-              <span class="badge"
-                ><span class="h-2 w-2 rounded-full bg-rainbow-orange"></span> Orange</span
-              >
-              <span class="badge"
-                ><span class="h-2 w-2 rounded-full bg-rainbow-yellow"></span> Yellow</span
-              >
-              <span class="badge"
-                ><span class="h-2 w-2 rounded-full bg-rainbow-green"></span> Green</span
-              >
-              <span class="badge"
-                ><span class="h-2 w-2 rounded-full bg-rainbow-blue"></span> Blue</span
-              >
-              <span class="badge"
-                ><span class="h-2 w-2 rounded-full bg-rainbow-violet"></span> Violet</span
-              >
+            <div class="badge mb-3">
+              <span class="h-2 w-2 rounded-full bg-rainbow-green"></span> Sampling available
             </div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold">Request pricing & samples</h2>
+            <p class="mt-3 text-slate-300">
+              Tell us about your restaurant and pick sample colors below. We’ll follow up with
+              wholesale pricing and sample options.
+            </p>
           </div>
 
           <form
@@ -284,14 +311,104 @@ function pattyStyle(hex: string) {
                   <option>48-pack</option>
                 </select>
               </div>
-              <div>
-                <label class="block text-sm font-medium text-slate-300">Colors of interest</label>
-                <input
-                  name="colors"
-                  type="text"
-                  placeholder="e.g. Red, Green, Violet"
-                  class="mt-1 w-full rounded-lg bg-slate-900 border border-slate-700 text-slate-100 placeholder-slate-400 px-3 py-2 focus:border-brand-primary focus:ring-brand-primary"
-                />
+              <div class="sm:col-span-2">
+                <fieldset>
+                  <legend class="block text-sm font-medium text-slate-300">
+                    Pick sample colors (optional)
+                  </legend>
+                  <div class="mt-2 flex flex-wrap gap-2">
+                    <label class="relative">
+                      <input
+                        type="checkbox"
+                        name="colors[]"
+                        v-model="selectedColors"
+                        value="Red"
+                        class="peer sr-only"
+                      />
+                      <span
+                        class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-sm text-white transition peer-checked:border-brand-primary/60 peer-checked:bg-brand-primary/20"
+                      >
+                        <span class="h-2.5 w-2.5 rounded-full bg-rainbow-red"></span>
+                        Red
+                      </span>
+                    </label>
+                    <label class="relative">
+                      <input
+                        type="checkbox"
+                        name="colors[]"
+                        v-model="selectedColors"
+                        value="Orange"
+                        class="peer sr-only"
+                      />
+                      <span
+                        class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-sm text-white transition peer-checked:border-brand-primary/60 peer-checked:bg-brand-primary/20"
+                      >
+                        <span class="h-2.5 w-2.5 rounded-full bg-rainbow-orange"></span>
+                        Orange
+                      </span>
+                    </label>
+                    <label class="relative">
+                      <input
+                        type="checkbox"
+                        name="colors[]"
+                        v-model="selectedColors"
+                        value="Yellow"
+                        class="peer sr-only"
+                      />
+                      <span
+                        class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-sm text-white transition peer-checked:border-brand-primary/60 peer-checked:bg-brand-primary/20"
+                      >
+                        <span class="h-2.5 w-2.5 rounded-full bg-rainbow-yellow"></span>
+                        Yellow
+                      </span>
+                    </label>
+                    <label class="relative">
+                      <input
+                        type="checkbox"
+                        name="colors[]"
+                        v-model="selectedColors"
+                        value="Green"
+                        class="peer sr-only"
+                      />
+                      <span
+                        class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-sm text-white transition peer-checked:border-brand-primary/60 peer-checked:bg-brand-primary/20"
+                      >
+                        <span class="h-2.5 w-2.5 rounded-full bg-rainbow-green"></span>
+                        Green
+                      </span>
+                    </label>
+                    <label class="relative">
+                      <input
+                        type="checkbox"
+                        name="colors[]"
+                        v-model="selectedColors"
+                        value="Blue"
+                        class="peer sr-only"
+                      />
+                      <span
+                        class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-sm text-white transition peer-checked:border-brand-primary/60 peer-checked:bg-brand-primary/20"
+                      >
+                        <span class="h-2.5 w-2.5 rounded-full bg-rainbow-blue"></span>
+                        Blue
+                      </span>
+                    </label>
+                    <label class="relative">
+                      <input
+                        type="checkbox"
+                        name="colors[]"
+                        v-model="selectedColors"
+                        value="Violet"
+                        class="peer sr-only"
+                      />
+                      <span
+                        class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-sm text-white transition peer-checked:border-brand-primary/60 peer-checked:bg-brand-primary/20"
+                      >
+                        <span class="h-2.5 w-2.5 rounded-full bg-rainbow-violet"></span>
+                        Violet
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
               </div>
               <div class="sm:col-span-2">
                 <label class="block text-sm font-medium text-slate-300">Message</label>
@@ -322,6 +439,94 @@ function pattyStyle(hex: string) {
         </div>
       </div>
     </section>
+
+    <!-- Sample Cart Toaster -->
+    <div
+      aria-live="polite"
+      class="fixed left-1/2 bottom-6 z-50 -translate-x-1/2 transition-all duration-300"
+      :class="[
+        showToaster ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0 pointer-events-none',
+      ]"
+    >
+      <div
+        class="glass-dark rounded-xl shadow-2xl border border-white/10 p-4 w-[calc(100vw-2rem)] max-w-3xl"
+      >
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="h-8 w-8 rounded-lg bg-rainbow-stripe"></div>
+            <div>
+              <p class="font-semibold">Sample cart</p>
+              <p class="text-xs text-slate-300">Colors added. They’re selected in the form.</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            @click="showToaster = false"
+            aria-label="Close"
+            class="text-white/70 hover:text-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="h-5 w-5"
+            >
+              <path
+                d="M6.225 4.811 4.81 6.225 10.586 12l-5.775 5.775 1.414 1.414L12 13.414l5.775 5.775 1.414-1.414L13.414 12l5.775-5.775-1.414-1.414L12 10.586 6.225 4.811Z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="mt-3 flex flex-wrap gap-2">
+          <span
+            v-for="c in selectedColors"
+            :key="c"
+            class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-sm"
+          >
+            <span class="h-2.5 w-2.5 rounded-full" :class="colorDotClass(c)"></span>
+            {{ c }}
+            <button
+              type="button"
+              class="text-white/70 hover:text-white"
+              @click="removeColor(c)"
+              aria-label="Remove"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="h-4 w-4"
+              >
+                <path d="M6 7h12v2H6zM8 9h8l-1 10H9zM10 5h4v2h-4z" />
+              </svg>
+            </button>
+          </span>
+        </div>
+        <div class="mt-3 flex gap-2 justify-end">
+          <button type="button" class="btn-secondary" @click="gotoForm">Go to form</button>
+          <button type="button" class="btn" @click="gotoForm">Request samples</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reopen Samples Button -->
+    <button
+      type="button"
+      class="fixed bottom-6 right-6 z-40 btn shadow-candy flex items-center gap-2"
+      v-if="selectedColors.length && !showToaster"
+      @click="showToaster = true"
+      aria-label="Open sample cart"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="h-5 w-5"
+      >
+        <path d="M6 7h12l-1 12H7L6 7zm3-2h6v2H9z" />
+      </svg>
+      <span>View samples ({{ selectedColors.length }})</span>
+    </button>
 
     <!-- Footer -->
     <footer class="border-t border-white/10 bg-slate-950">
