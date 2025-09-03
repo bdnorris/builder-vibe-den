@@ -4,40 +4,32 @@ interface ColorItem {
   name: string
   hex: string
   desc: string
-  image: string
+  img?: string
 }
 
 const colors: ColorItem[] = [
-  { name: 'Red', hex: '#ef4444', desc: 'Smoked beet + paprika', image: 'red.jpg' },
-  {
-    name: 'Orange', hex: '#f97316', desc: 'Carrot + roasted pepper',
-    image: 'orange.jpg'
-  },
-  {
-    name: 'Yellow', hex: '#eab308', desc: 'Turmeric + golden beet',
-    image: 'yellow.jpg'
-  },
-  {
-    name: 'Green', hex: '#22c55e', desc: 'Spinach + garden herb',
-    image: 'green.jpg'
-  },
-  {
-    name: 'Blue', hex: '#3b82f6', desc: 'Blue spirulina',
-    image: 'blue.jpg'
-  },
-  {
-    name: 'Violet', hex: '#8b5cf6', desc: 'Purple sweet potato',
-    image: 'violet.jpg'
-  },
+  { name: 'Red', hex: '#ef4444', desc: 'Smoked beet + paprika', img: '/red.jpg' },
+  { name: 'Orange', hex: '#f97316', desc: 'Carrot + roasted pepper', img: '/orange.jpg' },
+  { name: 'Yellow', hex: '#eab308', desc: 'Turmeric + golden beet', img: '/yellow.jpg' },
+  { name: 'Green', hex: '#22c55e', desc: 'Spinach + garden herb', img: '/green.jpg' },
+  { name: 'Blue', hex: '#3b82f6', desc: 'Blue spirulina', img: '/blue.jpg' },
+  { name: 'Violet', hex: '#8b5cf6', desc: 'Purple sweet potato', img: '/violet.jpg' },
 ]
 
 function pattyStyle(hex: string) {
-  // Rich, textured patty using layered gradients (works without Tailwind plugins)
   const base = hex
   const highlight = 'rgba(255,255,255,0.25)'
   const shadow = 'rgba(0,0,0,0.25)'
   return {
     backgroundImage: `radial-gradient(60% 60% at 30% 25%, ${highlight}, transparent 60%), radial-gradient(80% 80% at 70% 70%, ${shadow}, transparent 60%), radial-gradient(circle at 50% 50%, ${base}, ${base})`,
+  }
+}
+
+function cardStyle(hex: string) {
+  const a1 = hex.length === 7 ? `${hex}33` : hex
+  const a2 = hex.length === 7 ? `${hex}0D` : hex
+  return {
+    backgroundImage: `linear-gradient(135deg, ${a1}, ${a2})`,
   }
 }
 const selectedColors = ref<string[]>([])
@@ -182,37 +174,41 @@ watch(selectedColors, (v) => {
           <article
             v-for="c in colors"
             :key="c.name"
-            class="glass-dark rounded-2xl p-6 flex flex-col"
+            class="rounded-2xl overflow-hidden ring-1 ring-white/10 bg-white/5 flex flex-col"
+            :style="cardStyle(c.hex)"
           >
-            <div class="flex items-center justify-between">
-              <h3 class="text-xl font-bold">{{ c.name }}</h3>
-              <span class="text-xs text-slate-500">{{ c.desc }}</span>
-            </div>
-            <div class="mt-5 grid place-items-center">
-              <div
-                class="relative h-36 w-36 sm:h-40 sm:w-40 rounded-full shadow-xl ring-4 ring-white/10"
-                :style="pattyStyle(c.hex)"
-              >
-                <img
-                  v-if="c.image"
-                  :src="`/public/${c.image}`"
-                  alt=""
-                  class="absolute inset-0 h-full w-full object-cover rounded-full"
-                />
+            <div class="w-full">
+              <img
+                v-if="c.img"
+                :src="c.img"
+                :alt="c.name + ' patty'"
+                class="w-full h-48 sm:h-56 object-cover"
+              />
+              <div v-else class="w-full grid place-items-center py-10">
+                <div
+                  class="relative h-36 w-36 sm:h-40 sm:w-40 rounded-full shadow-xl ring-4 ring-white/10"
+                  :style="pattyStyle(c.hex)"
+                ></div>
               </div>
             </div>
-            <div class="mt-5 flex items-center justify-between text-sm">
-              <div class="flex items-center gap-2">
-                <span
-                  class="h-3 w-3 rounded-full"
-                  :style="{ backgroundColor: c.hex }"
-                  aria-hidden="true"
-                ></span>
-                <span class="sr-only">Color swatch</span>
+            <div class="p-6 flex items-start justify-between gap-4">
+              <div>
+                <h3 class="text-xl font-bold">{{ c.name }}</h3>
+                <p class="text-xs text-slate-300">{{ c.desc }}</p>
               </div>
-              <button type="button" class="btn-secondary" @click="addToMenu(c.name)">
-                Add to samples
-              </button>
+              <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2">
+                  <span
+                    class="h-3 w-3 rounded-full"
+                    :style="{ backgroundColor: c.hex }"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="sr-only">Color swatch</span>
+                </div>
+                <button type="button" class="btn-secondary" @click="addToMenu(c.name)">
+                  Add to samples
+                </button>
+              </div>
             </div>
           </article>
         </div>
@@ -236,7 +232,7 @@ watch(selectedColors, (v) => {
             </div>
             <ul class="mt-4 space-y-2 text-slate-300">
               <li>Great for daily specials and small concepts</li>
-              <li>Mix���and‑match up to 2 colors per case</li>
+              <li>Mix‑and‑match up to 2 colors per case</li>
               <li>Ships in insulated recyclable packaging</li>
             </ul>
             <div class="mt-6">
