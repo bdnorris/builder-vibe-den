@@ -8,7 +8,9 @@
   :root {
     --ring: 244 80% 60%;
   }
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     @apply font-display;
   }
 }
@@ -26,7 +28,15 @@
     @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium text-white bg-white/10 backdrop-blur border-white/20;
   }
   .rainbow-text {
-    background-image: linear-gradient(90deg, theme(colors.rainbow.red), theme(colors.rainbow.orange), theme(colors.rainbow.yellow), theme(colors.rainbow.green), theme(colors.rainbow.blue), theme(colors.rainbow.violet));
+    background-image: linear-gradient(
+      90deg,
+      theme(colors.rainbow.red),
+      theme(colors.rainbow.orange),
+      theme(colors.rainbow.yellow),
+      theme(colors.rainbow.green),
+      theme(colors.rainbow.blue),
+      theme(colors.rainbow.violet)
+    );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
