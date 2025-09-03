@@ -4,15 +4,31 @@ interface ColorItem {
   name: string
   hex: string
   desc: string
+  image: string
 }
 
 const colors: ColorItem[] = [
-  { name: 'Red', hex: '#ef4444', desc: 'Smoked beet + paprika' },
-  { name: 'Orange', hex: '#f97316', desc: 'Carrot + roasted pepper' },
-  { name: 'Yellow', hex: '#eab308', desc: 'Turmeric + golden beet' },
-  { name: 'Green', hex: '#22c55e', desc: 'Spinach + garden herb' },
-  { name: 'Blue', hex: '#3b82f6', desc: 'Blue spirulina' },
-  { name: 'Violet', hex: '#8b5cf6', desc: 'Purple sweet potato' },
+  { name: 'Red', hex: '#ef4444', desc: 'Smoked beet + paprika', image: 'red.jpg' },
+  {
+    name: 'Orange', hex: '#f97316', desc: 'Carrot + roasted pepper',
+    image: 'orange.jpg'
+  },
+  {
+    name: 'Yellow', hex: '#eab308', desc: 'Turmeric + golden beet',
+    image: 'yellow.jpg'
+  },
+  {
+    name: 'Green', hex: '#22c55e', desc: 'Spinach + garden herb',
+    image: 'green.jpg'
+  },
+  {
+    name: 'Blue', hex: '#3b82f6', desc: 'Blue spirulina',
+    image: 'blue.jpg'
+  },
+  {
+    name: 'Violet', hex: '#8b5cf6', desc: 'Purple sweet potato',
+    image: 'violet.jpg'
+  },
 ]
 
 function pattyStyle(hex: string) {
@@ -177,11 +193,12 @@ watch(selectedColors, (v) => {
                 class="relative h-36 w-36 sm:h-40 sm:w-40 rounded-full shadow-xl ring-4 ring-white/10"
                 :style="pattyStyle(c.hex)"
               >
-                <div
-                  class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white px-3 py-1 rounded-full text-xs font-semibold text-slate-900 shadow"
-                >
-                  Signature
-                </div>
+                <img
+                  v-if="c.image"
+                  :src="`/public/${c.image}`"
+                  alt=""
+                  class="absolute inset-0 h-full w-full object-cover rounded-full"
+                />
               </div>
             </div>
             <div class="mt-5 flex items-center justify-between text-sm">
