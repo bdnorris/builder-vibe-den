@@ -109,7 +109,7 @@ watch(selectedColors, (v) => {
           class="absolute inset-0 h-full w-full object-cover"
         >
           <source
-            src="https://videos.pexels.com/video-files/5510891/5510891-hd_1920_1080_25fps.mp4"
+            src="/public/pan.mp4"
             type="video/mp4"
           />
         </video>
